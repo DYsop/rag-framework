@@ -1,3 +1,5 @@
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-online-00f5d4?style=for-the-badge&logo=vercel)](https://rag-framework-ten.vercel.app)
+
 # 🤖 RAG-Framework
 > Architekturzentrierte Konzeption eines intelligenten, agentengestützten  
 > Retrieval-Augmented-Generation-Frameworks zur automatisierten Analyse  
@@ -113,3 +115,4 @@ python -m ipykernel install --user --name rag-framework
 - **Agenten:** AutoGen / CrewAI
 - **Backend:** FastAPI
 - **Frontend:** React + Three.js (3D Avatar)
+

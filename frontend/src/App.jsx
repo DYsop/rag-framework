@@ -6,6 +6,17 @@ import {
   XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend
 } from "recharts";
 
+// ── Mobile Detection Hook ───────────────────────────────────────────────────
+function useIsMobile() {
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  useEffect(() => {
+    const handler = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener("resize", handler);
+    return () => window.removeEventListener("resize", handler);
+  }, []);
+  return isMobile;
+}
+
 // ── Dummy-Daten (später durch FastAPI ersetzt) ──────────────────────────────
 const KPI_DATA = [
   { year: "2007", umsatz: 1.2, ebitda: 0.18, jahresueberschuss: 0.09, eigenkapitalrendite: 8.1 },
@@ -230,6 +241,7 @@ const ChartTooltip = ({ active, payload, label }) => {
 
 // ── Haupt-App ───────────────────────────────────────────────────────────────
 export default function App() {
+  const isMobile = useIsMobile();
   const [activeTab, setActiveTab] = useState("dashboard");
   const [speaking, setSpeaking] = useState(false);
   const [query, setQuery] = useState("");
@@ -353,9 +365,10 @@ export default function App() {
     }}>
       {/* Header */}
       <div style={{
-        padding: "14px 28px", borderBottom: "1px solid rgba(0,245,212,0.1)",
+        padding: isMobile ? "10px 16px" : "14px 28px",
+        borderBottom: "1px solid rgba(0,245,212,0.1)",
         display: "flex", alignItems: "center", justifyContent: "space-between",
-        background: "rgba(0,245,212,0.015)",
+        background: "rgba(0,245,212,0.015)", flexWrap: "wrap", gap: 8,
       }}>
         <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
           <div style={{ width: 32, height: 32, borderRadius: "50%",
@@ -392,10 +405,12 @@ export default function App() {
 
       {/* Tabs */}
       <div style={{ display: "flex", borderBottom: "1px solid rgba(255,255,255,0.05)",
-        padding: "0 28px", gap: 4 }}>
+        padding: isMobile ? "0 8px" : "0 28px", gap: 4,
+        overflowX: "auto", WebkitOverflowScrolling: "touch",
+        scrollbarWidth: "none", msOverflowStyle: "none" }}>
         {TABS.map(tab => (
           <button key={tab.id} onClick={() => setActiveTab(tab.id)} style={{
-            padding: "10px 18px", background: "none",
+            padding: isMobile ? "10px 12px" : "10px 18px", background: "none",
             border: "none", borderBottom: `2px solid ${activeTab === tab.id ? "#00f5d4" : "transparent"}`,
             color: activeTab === tab.id ? "#00f5d4" : "#889",
             cursor: "pointer", fontSize: 12, fontFamily: "inherit",
@@ -408,7 +423,7 @@ export default function App() {
       </div>
 
       {/* Content */}
-      <div style={{ flex: 1, padding: "20px 28px", overflowY: "auto" }}>
+      <div style={{ flex: 1, padding: isMobile ? "14px 12px" : "20px 28px", overflowY: "auto" }}>
 
         {/* ── DASHBOARD ── */}
         {activeTab === "dashboard" && (
@@ -417,7 +432,7 @@ export default function App() {
               Kennzahlen-Übersicht · Geschäftsjahr 2023
             </div>
             {/* KPI Cards */}
-            <div style={{ display: "flex", gap: 12, marginBottom: 24, flexWrap: "wrap" }}>
+            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr 1fr" : "repeat(5,1fr)", gap: 10, marginBottom: 20 }}>
               <KPICard label="Umsatz" value="2,7" unit="Mrd. €" delta={8} color="#00f5d4" />
               <KPICard label="EBITDA" value="470" unit="Mio. €" delta={9.3} color="#7b2fff" />
               <KPICard label="Jahresüberschuss" value="260" unit="Mio. €" delta={13} color="#ff6b35" />
@@ -471,14 +486,14 @@ export default function App() {
 
         {/* ── AVATAR / CHAT ── */}
         {activeTab === "avatar" && (
-          <div style={{ display: "flex", gap: 24 }}>
+          <div style={{ display: "flex", flexDirection: isMobile ? "column" : "row", gap: 24 }}>
             {/* Avatar Panel */}
             <div style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center" }}>
               <div style={{ position: "relative", marginBottom: 12 }}>
                 <div style={{ position: "absolute", inset: -24, borderRadius: "50%",
                   background: "radial-gradient(circle, rgba(0,245,212,0.06) 0%, transparent 70%)",
                   animation: "pulse 3s ease-in-out infinite", pointerEvents: "none" }} />
-                <ParticleAvatar speaking={speaking} size={260} />
+                <ParticleAvatar speaking={speaking} size={isMobile ? 200 : 260} />
               </div>
               {/* Hidden audio element for ElevenLabs playback */}
               <audio ref={audioRef} style={{ display: "none" }} />
@@ -551,7 +566,7 @@ export default function App() {
             </div>
 
             {/* Query History */}
-            <div style={{ width: 280 }}>
+            <div style={{ width: isMobile ? '100%' : 280 }}>
               <div style={{ fontSize: 11, color: "#aabbd0", letterSpacing: 2,
                 textTransform: "uppercase", marginBottom: 12 }}>Query-Verlauf</div>
               {queryHistory.map((h, i) => (
@@ -632,7 +647,7 @@ export default function App() {
 
         {/* ── UPLOAD ── */}
         {activeTab === "upload" && (
-          <div style={{ display: "flex", gap: 24 }}>
+          <div style={{ display: "flex", flexDirection: isMobile ? "column" : "row", gap: 24 }}>
             <div style={{ flex: 1 }}>
               <div style={{ fontSize: 11, color: "#aabbd0", letterSpacing: 2,
                 textTransform: "uppercase", marginBottom: 16 }}>Neue Dokumente hochladen</div>
@@ -659,7 +674,7 @@ export default function App() {
                 ))}
               </div>
             </div>
-            <div style={{ width: 260 }}>
+            <div style={{ width: isMobile ? '100%' : 260 }}>
               <div style={{ fontSize: 11, color: "#aabbd0", letterSpacing: 2,
                 textTransform: "uppercase", marginBottom: 12 }}>Dokumenten-Inventar</div>
               {[
@@ -722,6 +737,12 @@ export default function App() {
         ::-webkit-scrollbar { width: 4px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: rgba(0,245,212,0.2); border-radius: 99px; }
+        /* Mobile */
+        div[style*="overflowX"]::-webkit-scrollbar { display: none; }
+        @media (max-width: 768px) {
+          button { min-height: 40px; }
+          input  { font-size: 16px !important; } /* Prevents iOS zoom */
+        }
       `}</style>
     </div>
   );

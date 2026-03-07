@@ -1,0 +1,62 @@
+# ══════════════════════════════════════════════════
+# RAG-Framework Requirements
+# pip install -r requirements.txt
+# ══════════════════════════════════════════════════
+
+# ── LangChain ──────────────────────────────────────
+langchain>=0.2.0
+langchain-community>=0.2.0
+langchain-openai>=0.1.0
+langchain-text-splitters>=0.2.0
+langchain-experimental>=0.0.60
+
+# ── Embeddings ─────────────────────────────────────
+sentence-transformers>=3.0.0
+openai>=1.30.0
+
+# ── Vektordatenbanken ──────────────────────────────
+qdrant-client>=1.9.0
+chromadb>=0.5.0
+
+# ── Wissensgraph ───────────────────────────────────
+neo4j>=5.20.0
+
+# ── Agenten ────────────────────────────────────────
+pyautogen>=0.2.0
+crewai>=0.30.0
+
+# ── Backend ────────────────────────────────────────
+fastapi>=0.111.0
+uvicorn>=0.30.0
+pydantic>=2.7.0
+
+# ── Datenverarbeitung ──────────────────────────────
+pandas>=2.2.0
+numpy>=1.26.0
+scikit-learn>=1.4.0
+tiktoken>=0.7.0
+
+# ── Dokument-Loading ───────────────────────────────
+pypdf>=4.2.0
+python-docx>=1.1.0
+unstructured>=0.14.0
+
+# ── Evaluation ─────────────────────────────────────
+ragas>=0.1.9
+trulens-eval>=0.28.0
+
+# ── Visualisierung ─────────────────────────────────
+matplotlib>=3.9.0
+seaborn>=0.13.0
+plotly>=5.22.0
+
+# ── Utilities ──────────────────────────────────────
+python-dotenv>=1.0.0
+tqdm>=4.66.0
+pyyaml>=6.0.1
+loguru>=0.7.0
+
+# ── Jupyter ────────────────────────────────────────
+jupyter>=1.0.0
+ipykernel>=6.29.0
+ipywidgets>=8.1.0

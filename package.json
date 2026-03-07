@@ -1,0 +1,17 @@
+{
+  "name": "rag-framework",
+  "version": "1.0.0",
+  "description": "Agentengestütztes RAG-Framework für Finanzanalysen",
+  "private": true,
+  "scripts": {
+    "frontend":     "cd frontend && npm run dev",
+    "frontend:build": "cd frontend && npm run build",
+    "api":          "cd src/api && uvicorn main:app --reload --port 8000",
+    "start":        "npm run frontend",
+    "install:all":  "cd frontend && npm install",
+    "setup":        "npm run install:all && echo ✅ Setup abgeschlossen!"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

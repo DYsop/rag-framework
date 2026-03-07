@@ -1,5 +1,7 @@
 # React + Vite
 
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-rag--framework.vercel.app-00f5d4?style=flat-square&logo=vercel)](https://rag-framework-ten.vercel.app)
+
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
 Currently, two official plugins are available:

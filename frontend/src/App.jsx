@@ -135,11 +135,11 @@ function KPICard({ label, value, unit, delta, color }) {
   return (
     <div style={{
       padding: "14px 18px", borderRadius: 10,
-      background: "rgba(255,255,255,0.03)",
+      background: "rgba(255,255,255,0.07)",
       border: `1px solid ${color}22`,
       flex: 1, minWidth: 120,
     }}>
-      <div style={{ fontSize: 10, color: "#99aabb", letterSpacing: 2, textTransform: "uppercase", marginBottom: 6 }}>{label}</div>
+      <div style={{ fontSize: 10, color: "#b0c4d8", letterSpacing: 2, textTransform: "uppercase", marginBottom: 6 }}>{label}</div>
       <div style={{ fontSize: 22, fontWeight: 700, color, lineHeight: 1 }}>
         {value}<span style={{ fontSize: 12, marginLeft: 3, color: "#557" }}>{unit}</span>
       </div>
@@ -178,7 +178,7 @@ function UploadZone({ onUpload }) {
       >
         <div style={{ fontSize: 28, marginBottom: 8 }}>📄</div>
         <div style={{ color: "#00f5d4", fontSize: 13, fontWeight: 600 }}>PDFs hier ablegen</div>
-        <div style={{ color: "#889", fontSize: 11, marginTop: 4 }}>oder klicken zum Auswählen</div>
+        <div style={{ color: "#aabbd0", fontSize: 11, marginTop: 4 }}>oder klicken zum Auswählen</div>
       </div>
       {files.length > 0 && (
         <div style={{ marginTop: 12 }}>
@@ -190,11 +190,11 @@ function UploadZone({ onUpload }) {
             }}>
               <span style={{ color: "#00f5d4" }}>✓</span>
               <span style={{ flex: 1, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{f.name}</span>
-              <span style={{ color: "#889" }}>{(f.size / 1024).toFixed(0)} KB</span>
+              <span style={{ color: "#aabbd0" }}>{(f.size / 1024).toFixed(0)} KB</span>
             </div>
           ))}
           {files.length > 3 && (
-            <div style={{ fontSize: 11, color: "#889", textAlign: "center" }}>+{files.length - 3} weitere</div>
+            <div style={{ fontSize: 11, color: "#aabbd0", textAlign: "center" }}>+{files.length - 3} weitere</div>
           )}
           <button style={{
             width: "100%", marginTop: 10, padding: "9px",
@@ -280,7 +280,7 @@ export default function App() {
 
   return (
     <div style={{
-      minHeight: "100vh", background: "#07090f", color: "#e8f0f8",
+      minHeight: "100vh", width: "100%", background: "#0a0e1a", color: "#e8f1fc",
       fontFamily: "'DM Mono', 'Courier New', monospace", fontSize: 14,
       display: "flex", flexDirection: "column",
     }}>
@@ -297,12 +297,12 @@ export default function App() {
             fontSize: 14, color: "#07090f", fontWeight: 700 }}>✦</div>
           <div>
             <div style={{ fontSize: 14, fontWeight: 700, letterSpacing: -0.3 }}>RAG Intelligence Platform</div>
-            <div style={{ fontSize: 10, color: "#889", letterSpacing: 3, textTransform: "uppercase" }}>Finanzanalyse · 2007–2023</div>
+            <div style={{ fontSize: 10, color: "#aabbd0", letterSpacing: 3, textTransform: "uppercase" }}>Finanzanalyse · 2007–2023</div>
           </div>
         </div>
         <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
           <div style={{ textAlign: "right" }}>
-            <div style={{ fontSize: 10, color: "#889", letterSpacing: 2 }}>VERARBEITUNGSSTAND</div>
+            <div style={{ fontSize: 10, color: "#aabbd0", letterSpacing: 2 }}>VERARBEITUNGSSTAND</div>
             <div style={{ display: "flex", alignItems: "center", gap: 8, marginTop: 3 }}>
               <div style={{ width: 120, height: 4, background: "rgba(255,255,255,0.06)", borderRadius: 99 }}>
                 <div style={{ width: `${processingProgress}%`, height: "100%",
@@ -346,7 +346,7 @@ export default function App() {
         {/* ── DASHBOARD ── */}
         {activeTab === "dashboard" && (
           <div>
-            <div style={{ fontSize: 11, color: "#889", letterSpacing: 3, textTransform: "uppercase", marginBottom: 16 }}>
+            <div style={{ fontSize: 11, color: "#aabbd0", letterSpacing: 3, textTransform: "uppercase", marginBottom: 16 }}>
               Kennzahlen-Übersicht · Geschäftsjahr 2023
             </div>
             {/* KPI Cards */}
@@ -359,9 +359,9 @@ export default function App() {
             </div>
 
             {/* Mini Chart */}
-            <div style={{ background: "rgba(255,255,255,0.02)", borderRadius: 12,
+            <div style={{ background: "rgba(255,255,255,0.05)", borderRadius: 12,
               border: "1px solid rgba(255,255,255,0.06)", padding: "18px 20px", marginBottom: 20 }}>
-              <div style={{ fontSize: 11, color: "#889", letterSpacing: 2, textTransform: "uppercase", marginBottom: 14 }}>
+              <div style={{ fontSize: 11, color: "#aabbd0", letterSpacing: 2, textTransform: "uppercase", marginBottom: 14 }}>
                 Umsatzentwicklung 2007–2023
               </div>
               <ResponsiveContainer width="100%" height={180}>
@@ -382,16 +382,16 @@ export default function App() {
             </div>
 
             {/* Processing Log */}
-            <div style={{ background: "rgba(255,255,255,0.02)", borderRadius: 12,
+            <div style={{ background: "rgba(255,255,255,0.05)", borderRadius: 12,
               border: "1px solid rgba(255,255,255,0.06)", padding: "18px 20px" }}>
-              <div style={{ fontSize: 11, color: "#889", letterSpacing: 2, textTransform: "uppercase", marginBottom: 12 }}>
+              <div style={{ fontSize: 11, color: "#aabbd0", letterSpacing: 2, textTransform: "uppercase", marginBottom: 12 }}>
                 Live Processing Log
               </div>
               {PROCESSING_LOG.map((log, i) => (
                 <div key={i} style={{ display: "flex", gap: 12, alignItems: "center",
                   padding: "5px 0", borderBottom: "1px solid rgba(255,255,255,0.03)",
                   fontSize: 11 }}>
-                  <span style={{ color: "#334", minWidth: 60 }}>{log.time}</span>
+                  <span style={{ color: "#6a7f96", minWidth: 60 }}>{log.time}</span>
                   <span style={{ color: log.status === "active" ? "#00f5d4" : "#556" }}>
                     {log.status === "active" ? "▶" : "✓"}
                   </span>
@@ -426,7 +426,7 @@ export default function App() {
                 </span>
               </div>
               <div style={{ maxWidth: 380, padding: "14px 18px", borderRadius: 12,
-                background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)",
+                background: "rgba(255,255,255,0.07)", border: "1px solid rgba(255,255,255,0.07)",
                 fontSize: 13, lineHeight: 1.75, color: "#c0d0e0", textAlign: "center", marginBottom: 16 }}>
                 {answer}
               </div>
@@ -434,7 +434,7 @@ export default function App() {
                 <input value={query} onChange={e => setQuery(e.target.value)}
                   onKeyDown={e => e.key === "Enter" && handleQuery()}
                   placeholder="Frage stellen... (Umsatz, Risiko, Strategie...)"
-                  style={{ flex: 1, background: "rgba(255,255,255,0.04)",
+                  style={{ flex: 1, background: "rgba(255,255,255,0.08)",
                     border: "1px solid rgba(0,245,212,0.2)", borderRadius: 8,
                     padding: "10px 13px", color: "#e8f0f8", fontSize: 12,
                     outline: "none", fontFamily: "inherit" }} />
@@ -450,17 +450,17 @@ export default function App() {
 
             {/* Query History */}
             <div style={{ width: 280 }}>
-              <div style={{ fontSize: 11, color: "#889", letterSpacing: 2,
+              <div style={{ fontSize: 11, color: "#aabbd0", letterSpacing: 2,
                 textTransform: "uppercase", marginBottom: 12 }}>Query-Verlauf</div>
               {queryHistory.map((h, i) => (
                 <div key={i} onClick={() => { setQuery(h.q); }}
                   style={{ padding: "10px 12px", borderRadius: 8, marginBottom: 8,
-                    background: "rgba(255,255,255,0.02)",
+                    background: "rgba(255,255,255,0.05)",
                     border: "1px solid rgba(255,255,255,0.05)",
                     cursor: "pointer", transition: "all 0.2s" }}>
                   <div style={{ fontSize: 12, color: "#dde8f4", marginBottom: 4,
                     overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{h.q}</div>
-                  <div style={{ display: "flex", justifyContent: "space-between", fontSize: 10, color: "#889" }}>
+                  <div style={{ display: "flex", justifyContent: "space-between", fontSize: 10, color: "#aabbd0" }}>
                     <span>{h.time}</span>
                     <span style={{ color: "#00f5d4" }}>{h.chunks} Chunks</span>
                   </div>
@@ -486,9 +486,9 @@ export default function App() {
             </div>
 
             {/* Liniendiagramm */}
-            <div style={{ background: "rgba(255,255,255,0.02)", borderRadius: 12,
+            <div style={{ background: "rgba(255,255,255,0.05)", borderRadius: 12,
               border: "1px solid rgba(255,255,255,0.06)", padding: "20px", marginBottom: 20 }}>
-              <div style={{ fontSize: 11, color: "#889", letterSpacing: 2,
+              <div style={{ fontSize: 11, color: "#aabbd0", letterSpacing: 2,
                 textTransform: "uppercase", marginBottom: 16 }}>
                 {CHART_OPTIONS.find(c => c.key === activeChart)?.label} — Zeitreihe 2007–2023
               </div>
@@ -507,9 +507,9 @@ export default function App() {
             </div>
 
             {/* Balkendiagramm alle KPIs */}
-            <div style={{ background: "rgba(255,255,255,0.02)", borderRadius: 12,
+            <div style={{ background: "rgba(255,255,255,0.05)", borderRadius: 12,
               border: "1px solid rgba(255,255,255,0.06)", padding: "20px" }}>
-              <div style={{ fontSize: 11, color: "#889", letterSpacing: 2,
+              <div style={{ fontSize: 11, color: "#aabbd0", letterSpacing: 2,
                 textTransform: "uppercase", marginBottom: 16 }}>
                 Vergleich Umsatz & EBITDA (Mrd. €)
               </div>
@@ -519,7 +519,7 @@ export default function App() {
                   <XAxis dataKey="year" tick={{ fill: "#445", fontSize: 11 }} />
                   <YAxis tick={{ fill: "#445", fontSize: 11 }} />
                   <Tooltip content={<ChartTooltip />} />
-                  <Legend wrapperStyle={{ color: "#99aabb", fontSize: 11 }} />
+                  <Legend wrapperStyle={{ color: "#b0c4d8", fontSize: 11 }} />
                   <Bar dataKey="umsatz" fill="#00f5d488" name="Umsatz" radius={[4,4,0,0]} />
                   <Bar dataKey="ebitda" fill="#7b2fff88" name="EBITDA" radius={[4,4,0,0]} />
                 </BarChart>
@@ -532,12 +532,12 @@ export default function App() {
         {activeTab === "upload" && (
           <div style={{ display: "flex", gap: 24 }}>
             <div style={{ flex: 1 }}>
-              <div style={{ fontSize: 11, color: "#889", letterSpacing: 2,
+              <div style={{ fontSize: 11, color: "#aabbd0", letterSpacing: 2,
                 textTransform: "uppercase", marginBottom: 16 }}>Neue Dokumente hochladen</div>
               <UploadZone />
-              <div style={{ marginTop: 24, background: "rgba(255,255,255,0.02)", borderRadius: 12,
+              <div style={{ marginTop: 24, background: "rgba(255,255,255,0.05)", borderRadius: 12,
                 border: "1px solid rgba(255,255,255,0.06)", padding: "18px 20px" }}>
-                <div style={{ fontSize: 11, color: "#889", letterSpacing: 2,
+                <div style={{ fontSize: 11, color: "#aabbd0", letterSpacing: 2,
                   textTransform: "uppercase", marginBottom: 12 }}>Verarbeitungs-Pipeline</div>
                 {["PDF laden & Seiten extrahieren", "Text bereinigen & Metadaten extrahieren",
                   "Rekursives Chunking (600 Zeichen)", "BGE-M3 Embedding (lokal)",
@@ -558,7 +558,7 @@ export default function App() {
               </div>
             </div>
             <div style={{ width: 260 }}>
-              <div style={{ fontSize: 11, color: "#889", letterSpacing: 2,
+              <div style={{ fontSize: 11, color: "#aabbd0", letterSpacing: 2,
                 textTransform: "uppercase", marginBottom: 12 }}>Dokumenten-Inventar</div>
               {[
                 { type: "Konzernabschluss", count: 17, color: "#00f5d4" },
@@ -586,17 +586,17 @@ export default function App() {
         {/* ── ERGEBNISSE ── */}
         {activeTab === "results" && (
           <div>
-            <div style={{ fontSize: 11, color: "#889", letterSpacing: 2,
+            <div style={{ fontSize: 11, color: "#aabbd0", letterSpacing: 2,
               textTransform: "uppercase", marginBottom: 16 }}>Letzte Analyse-Ergebnisse</div>
             {queryHistory.map((h, i) => (
               <div key={i} style={{ padding: "16px 20px", borderRadius: 12, marginBottom: 12,
-                background: "rgba(255,255,255,0.02)",
+                background: "rgba(255,255,255,0.05)",
                 border: "1px solid rgba(255,255,255,0.06)" }}>
                 <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 10 }}>
                   <div style={{ fontSize: 13, color: "#e8f0f8", fontWeight: 600 }}>❓ {h.q}</div>
-                  <div style={{ fontSize: 10, color: "#889" }}>{h.time}</div>
+                  <div style={{ fontSize: 10, color: "#aabbd0" }}>{h.time}</div>
                 </div>
-                <div style={{ fontSize: 12, color: "#99aabb", marginBottom: 10 }}>
+                <div style={{ fontSize: 12, color: "#b0c4d8", marginBottom: 10 }}>
                   {h.chunks} relevante Chunks gefunden aus:
                 </div>
                 <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>

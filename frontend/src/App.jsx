@@ -237,6 +237,74 @@ export default function App() {
   const [queryHistory, setQueryHistory] = useState(QUERY_HISTORY);
   const [activeChart, setActiveChart] = useState("umsatz");
   const [processingProgress, setProcessingProgress] = useState(68);
+  const [voiceEnabled, setVoiceEnabled] = useState(true);
+  const [voiceStatus, setVoiceStatus] = useState("idle"); // idle | loading | playing | error
+  const audioRef = useRef(null);
+
+  // ── ElevenLabs TTS ────────────────────────────────────────────────────────
+  // Trage deinen ElevenLabs API-Key in frontend/.env ein:
+  // VITE_ELEVENLABS_KEY=sk_...
+  // Voice-ID: Sarah (weiblich, Deutsch) — oder auf elevenlabs.io eine andere wählen
+  const ELEVENLABS_KEY   = import.meta.env.VITE_ELEVENLABS_KEY || "";
+  const ELEVENLABS_VOICE = import.meta.env.VITE_ELEVENLABS_VOICE || "EXAVITQu4vr4xnSDxMaL"; // Sarah
+
+  const speak = useCallback(async (text) => {
+    if (!voiceEnabled || !ELEVENLABS_KEY) {
+      // Fallback: Browser-TTS wenn kein API-Key
+      if (!voiceEnabled) return;
+      const utt = new SpeechSynthesisUtterance(text);
+      utt.lang = "de-DE";
+      const voices = window.speechSynthesis.getVoices();
+      const female = voices.find(v => v.lang.startsWith("de") && v.name.toLowerCase().includes("female"))
+                  || voices.find(v => v.lang.startsWith("de"))
+                  || voices[0];
+      if (female) utt.voice = female;
+      utt.onstart = () => { setSpeaking(true); setVoiceStatus("playing"); };
+      utt.onend   = () => { setSpeaking(false); setVoiceStatus("idle"); };
+      window.speechSynthesis.speak(utt);
+      return;
+    }
+    try {
+      setVoiceStatus("loading");
+      setSpeaking(true);
+      const res = await fetch(`https://api.elevenlabs.io/v1/text-to-speech/${ELEVENLABS_VOICE}`, {
+        method: "POST",
+        headers: {
+          "xi-api-key": ELEVENLABS_KEY,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          text,
+          model_id: "eleven_multilingual_v2",
+          voice_settings: { stability: 0.5, similarity_boost: 0.8, style: 0.2 },
+        }),
+      });
+      if (!res.ok) throw new Error("ElevenLabs Fehler: " + res.status);
+      const blob = await res.blob();
+      const url  = URL.createObjectURL(blob);
+      if (audioRef.current) {
+        audioRef.current.src = url;
+        audioRef.current.onended = () => { setSpeaking(false); setVoiceStatus("idle"); URL.revokeObjectURL(url); };
+        audioRef.current.oncanplay = () => setVoiceStatus("playing");
+        await audioRef.current.play();
+      }
+    } catch (e) {
+      console.error("TTS Fehler:", e);
+      setVoiceStatus("error");
+      setSpeaking(false);
+      setTimeout(() => setVoiceStatus("idle"), 3000);
+    }
+  }, [voiceEnabled, ELEVENLABS_KEY, ELEVENLABS_VOICE]);
+
+  // Begrüßung beim Start
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      const greeting = "Guten Tag! Ich bin deine KI-Assistentin für Finanzanalysen. Wie kann ich dir helfen?";
+      setAnswer(greeting);
+      speak(greeting);
+    }, 1200);
+    return () => clearTimeout(timer);
+  }, []);
 
   const ANSWERS = {
     "umsatz":    "Der Umsatz ist von 1,2 Mrd. € (2007) auf 2,7 Mrd. € (2023) gestiegen — ein Wachstum von 125% über 16 Jahre.",
@@ -254,10 +322,9 @@ export default function App() {
       if (q.includes(k)) { resp = v; break; }
     }
     setAnswer(resp);
-    setSpeaking(true);
     setQueryHistory(prev => [{ q: query, time: new Date().toLocaleTimeString("de-DE", {hour:"2-digit",minute:"2-digit"}), chunks: Math.floor(Math.random()*8)+2 }, ...prev.slice(0,4)]);
     setQuery("");
-    setTimeout(() => setSpeaking(false), 3500);
+    speak(resp);
   };
 
   const TABS = [
@@ -413,17 +480,52 @@ export default function App() {
                   animation: "pulse 3s ease-in-out infinite", pointerEvents: "none" }} />
                 <ParticleAvatar speaking={speaking} size={260} />
               </div>
-              <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 16,
-                padding: "5px 16px", borderRadius: 99,
-                border: `1px solid ${speaking ? "#00f5d4" : "rgba(255,255,255,0.08)"}`,
-                background: speaking ? "rgba(0,245,212,0.07)" : "rgba(255,255,255,0.02)",
-                transition: "all 0.4s", fontSize: 10, letterSpacing: 2, textTransform: "uppercase" }}>
-                <div style={{ width: 6, height: 6, borderRadius: "50%",
-                  background: speaking ? "#00f5d4" : "#333",
-                  boxShadow: speaking ? "0 0 8px #00f5d4" : "none" }} />
-                <span style={{ color: speaking ? "#00f5d4" : "#445" }}>
-                  {speaking ? "Analysiere..." : "Bereit"}
-                </span>
+              {/* Hidden audio element for ElevenLabs playback */}
+              <audio ref={audioRef} style={{ display: "none" }} />
+
+              {/* Status + Voice Toggle */}
+              <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 16 }}>
+                <div style={{
+                  display: "flex", alignItems: "center", gap: 8,
+                  padding: "5px 16px", borderRadius: 99,
+                  border: `1px solid ${speaking ? "#00f5d4" : "rgba(255,255,255,0.08)"}`,
+                  background: speaking ? "rgba(0,245,212,0.07)" : "rgba(255,255,255,0.05)",
+                  transition: "all 0.4s", fontSize: 10, letterSpacing: 2, textTransform: "uppercase" }}>
+                  <div style={{ width: 6, height: 6, borderRadius: "50%",
+                    background: voiceStatus === "error" ? "#ef476f" : speaking ? "#00f5d4" : "#555",
+                    boxShadow: speaking ? "0 0 8px #00f5d4" : "none" }} />
+                  <span style={{ color: voiceStatus === "error" ? "#ef476f" : speaking ? "#00f5d4" : "#7a90a8" }}>
+                    {voiceStatus === "loading" ? "Generiere Stimme..." :
+                     voiceStatus === "playing" ? "Spricht..." :
+                     voiceStatus === "error"   ? "Stimme nicht verfügbar" : "Bereit"}
+                  </span>
+                </div>
+
+                {/* Voice Toggle Checkbox */}
+                <label style={{
+                  display: "flex", alignItems: "center", gap: 7, cursor: "pointer",
+                  padding: "5px 12px", borderRadius: 99,
+                  border: `1px solid ${voiceEnabled ? "rgba(0,245,212,0.3)" : "rgba(255,255,255,0.1)"}`,
+                  background: voiceEnabled ? "rgba(0,245,212,0.06)" : "rgba(255,255,255,0.03)",
+                  fontSize: 10, letterSpacing: 1, textTransform: "uppercase",
+                  transition: "all 0.2s", userSelect: "none",
+                }}>
+                  <div style={{
+                    width: 28, height: 16, borderRadius: 99, position: "relative",
+                    background: voiceEnabled ? "#00f5d4" : "rgba(255,255,255,0.15)",
+                    transition: "background 0.2s", flexShrink: 0,
+                  }}
+                    onClick={() => setVoiceEnabled(v => !v)}>
+                    <div style={{
+                      position: "absolute", top: 2, left: voiceEnabled ? 14 : 2,
+                      width: 12, height: 12, borderRadius: "50%", background: "white",
+                      transition: "left 0.2s",
+                    }} />
+                  </div>
+                  <span style={{ color: voiceEnabled ? "#00f5d4" : "#7a90a8" }}>
+                    {voiceEnabled ? "🔊 Stimme an" : "🔇 Stimme aus"}
+                  </span>
+                </label>
               </div>
               <div style={{ maxWidth: 380, padding: "14px 18px", borderRadius: 12,
                 background: "rgba(255,255,255,0.07)", border: "1px solid rgba(255,255,255,0.07)",

@@ -1,9 +1,17 @@
-[![Live Demo](https://img.shields.io/badge/Live%20Demo-online-00f5d4?style=for-the-badge&logo=vercel)](https://rag-framework-ten.vercel.app)
+# RAG Intelligence Platform
 
-# 🤖 RAG-Framework
-> Architekturzentrierte Konzeption eines intelligenten, agentengestützten  
-> Retrieval-Augmented-Generation-Frameworks zur automatisierten Analyse  
-> von Unternehmensdaten
+Agentengestütztes RAG-Framework zur automatisierten Analyse von Unternehmensdaten mit dynamischer Anbindung externer Datenquellen.
+
+## 🔍 Chunking-Strategien — Interaktive Visualisierung
+
+> **[→ Alle 20 Chunking-Strategien interaktiv erkunden](https://dysop.github.io/rag-framework/)**
+
+Lokal starten:
+```bash
+cd chunking-viz
+npm install
+npm run dev
+```
 
 ---
 
@@ -48,71 +56,50 @@ rag-framework/
 │   ├── processed/              # Verarbeitete Daten
 │   └── gold_standard/          # Test-Datensätze (in Git)
 │
-├── configs/                    # Konfigurationen
-│   ├── chunking.yaml
-│   ├── embeddings.yaml
-│   └── agents.yaml
+├── docs/
+│   └── grafiken/               # Statische PNG-Grafiken (Thesis)
 │
-├── docs/                       # Dokumentation
-│   └── images/
+├── chunking-viz/               # Interaktive Chunking-Visualisierung
+│   ├── src/App.jsx             # Alle 20 Strategien
+│   ├── package.json
+│   └── README.md
 │
-├── .env.example                # Vorlage für Umgebungsvariablen
+├── configs/
+├── frontend/
+├── .env.example
 ├── .gitignore
 ├── docker-compose.yml
+├── package.json
 ├── requirements.txt
-└── README.md
+└── start.bat
 ```
 
----
+## Quickstart
 
-## Setup
-
-### 1. Repository klonen
 ```bash
-git clone <repository-url>
-cd rag-framework
-```
-
-### 2. Environment erstellen
-```bash
-conda create -n rag-framework python=3.11
-conda activate rag-framework
+# Python-Abhängigkeiten
 pip install -r requirements.txt
+
+# Services starten (Qdrant, Neo4j, Elasticsearch)
+docker-compose up -d
+
+# API starten
+uvicorn src.api.main:app --reload
+
+# Oder alles auf einmal (Windows)
+start.bat
 ```
 
-### 3. Umgebungsvariablen setzen
+## Konfiguration
+
+Kopiere `.env.example` → `.env` und trage deine Werte ein:
+
 ```bash
 cp .env.example .env
-# .env öffnen und API-Keys eintragen
 ```
 
-### 4. Jupyter Kernel registrieren
+## Tests
+
 ```bash
-python -m ipykernel install --user --name rag-framework
+pytest tests/
 ```
-
----
-
-## Wissenschaftlicher Fokus
-
-| Thema | Methoden |
-|---|---|
-| **Chunking** | Recursive, Sentence-Boundary, Semantic, Hierarchical |
-| **Embedding** | BGE-M3, OpenAI text-embedding-3, MiniLM |
-| **RAG** | Naïve → Advanced → Modular RAG |
-| **GraphRAG** | Neo4j, Entity-Linking, Community Detection |
-| **Agents** | ReAct, CoT, Multi-Agent (AutoGen/CrewAI) |
-
----
-
-## Technologie-Stack
-
-- **LLM:** OpenAI GPT-4o / Anthropic Claude
-- **Embeddings:** BGE-M3 (lokal) / OpenAI (Cloud)
-- **Vektordatenbank:** Qdrant
-- **Wissensgraph:** Neo4j
-- **Framework:** LangChain / LlamaIndex
-- **Agenten:** AutoGen / CrewAI
-- **Backend:** FastAPI
-- **Frontend:** React + Three.js (3D Avatar)
-

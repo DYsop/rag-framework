@@ -1,12 +1,6 @@
 # Chunking-Strategien — Interaktive Visualisierung
 
-Interaktive React-Anwendung zur Erläuterung aller 20 Chunking-Strategien aus Kapitel 5 der Masterarbeit.
-
-**Zugehörig zu:** Masterarbeit »RAG Intelligence Platform« — Studiengang Angewandte KI, SoSe 2026  
-**Design:** Dark Theme (GitHub-optimiert)  
-**Live-Demo:** https://DYsop.github.io/rag-framework/
-
----
+Interaktive React-Anwendung zur Erläuterung aller 20 Chunking-Strategien.
 
 ## Schnellstart
 
@@ -47,7 +41,3 @@ npm run build
 | 15   | LLMLingua                        | Kompression   |
 | 16   | Late Chunking                    | Adaptiv       |
 | 17   | Hierarchical / Kombiniert        | Hierarchisch  |
-
-## Hinweis zu Grafiken
-
-Die statischen PNG-Grafiken (helles akademisches Layout, Word-geeignet) liegen in `../docs/grafiken/`.

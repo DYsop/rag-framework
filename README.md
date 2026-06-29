@@ -1,105 +1,172 @@
-# RAG Intelligence Platform
+<p align="center">
+  <img src="assets/images/repo-cover.png" alt="Agentengestütztes RAG-Framework" width="100%">
+</p>
 
-Agentengestütztes RAG-Framework zur automatisierten Analyse von Unternehmensdaten mit dynamischer Anbindung externer Datenquellen.
+# Agentengestütztes RAG-Framework
 
-## 🔍 Chunking-Strategien — Interaktive Visualisierung
+**Konzeption und Evaluation eines agentengestützten RAG-Frameworks zur semantischen Erschließung heterogener Unternehmensinformationen und prognoseorientierten Modellierung exogener Einflussgrößen**
 
-> **[→ Alle 20 Chunking-Strategien interaktiv erkunden](https://dysop.github.io/rag-framework/)**
+Technisches Forschungsartefakt zur gleichnamigen Masterarbeit im Studiengang *Angewandte Künstliche Intelligenz*. Dieses Repository ist die technische Umsetzung der Masterarbeit und bildet bewusst deren Kapitel- und Forschungslogik ab. Es ist kein loser Experimentordner, sondern ein reproduzierbares, modular aufgebautes Forschungsartefakt.
 
-Lokal starten:
+---
+
+## Inhaltsverzeichnis
+
+- [Kurzbeschreibung](#kurzbeschreibung)
+- [Forschungsziel](#forschungsziel)
+- [Architekturüberblick](#architekturüberblick)
+- [Forschungsfragen](#forschungsfragen)
+- [Repository-Struktur](#repository-struktur)
+- [Quickstart](#quickstart)
+- [Datenhinweise](#datenhinweise)
+- [Notebooks](#notebooks)
+- [Evaluation](#evaluation)
+- [Reproduzierbarkeit](#reproduzierbarkeit)
+- [Roadmap](#roadmap)
+- [Zitierhinweis](#zitierhinweis)
+- [Lizenz und Nutzungsgrenzen](#lizenz-und-nutzungsgrenzen)
+
+---
+
+## Kurzbeschreibung
+
+Das Framework verbindet Retrieval-Augmented Generation (RAG) mit einer agentengestützten Orchestrierung, um heterogene Unternehmensinformationen aus strukturierten und unstrukturierten Quellen semantisch zu erschließen. Aufbauend auf den so erschlossenen Wissensbeständen werden exogene Einflussgrößen prognoseorientiert modelliert und die Ergebnisse entlang klar definierter Metriken evaluiert.
+
+## Forschungsziel
+
+Ziel ist die Konzeption, prototypische Realisierung und Evaluation eines Frameworks, das (1) heterogene Quellen verlässlich und nachvollziehbar erschließt (Provenance), (2) agentengestütztes Reasoning für mehrstufige Analysefragen ermöglicht und (3) exogene Einflussgrößen prognoseorientiert modelliert. Der Fokus liegt auf Nachvollziehbarkeit, Reproduzierbarkeit und methodischer Sauberkeit – nicht auf der Produktion vermeintlich fertiger Ergebnisse.
+
+## Architekturüberblick
+
+Die Architektur ist in drei Wirkungsbereiche gegliedert, die der Coverabbildung entsprechen:
+
+1. **Heterogene Unternehmensinformationen** – strukturierte Daten (z. B. ERP, CRM, Finanzdaten), unstrukturierte Dokumente, interne Kommunikation, externe Quellen sowie Sensor- und IoT-Daten werden über eine Ingestion- und Normalisierungsschicht aufgenommen.
+2. **Semantische Erschließung und agentengestütztes Reasoning** – Chunking, Embedding und Vektorindex bilden die semantische Repräsentation; eine mehrstufige Agenten-Pipeline (Zielverständnis, Retrieval, Reasoning, Antwortgenerierung) arbeitet gegen eine vernetzte Wissensbasis mit Provenance und Governance.
+3. **Exogene Einflussgrößen und Prognose-Evaluation** – ausgewählte exogene Faktoren werden modelliert, Prognosen erstellt und entlang von Güte- und Systemmetriken bewertet.
+
+Eine ausführliche Beschreibung findet sich in den Dokumentationskapiteln unter `docs/`.
+
+## Forschungsfragen
+
+- **FF1:** Wie können heterogene Unternehmensinformationen so semantisch erschlossen werden, dass Retrieval-Ergebnisse nachvollziehbar (Provenance) und quellenbindend bleiben?
+- **FF2:** Welchen Beitrag leistet eine agentengestützte Orchestrierung gegenüber klassischem Single-Pass-RAG bei mehrstufigen Analysefragen?
+- **FF3:** Wie lassen sich exogene Einflussgrößen aus erschlossenen Wissensbeständen prognoseorientiert modellieren und bewerten?
+- **FF4:** Mit welchen Metriken lassen sich Ingestion, Retrieval, Antwortqualität, Agentenverhalten und Prognosegüte reproduzierbar evaluieren?
+
+## Repository-Struktur
+
+```text
+rag-framework/
+├── README.md
+├── LICENSE
+├── CITATION.cff
+├── pyproject.toml
+├── requirements.txt
+├── docker-compose.yml
+├── .env.example
+├── .gitignore
+│
+├── assets/
+│   ├── images/            # Coverbild und Abbildungen
+│   └── diagrams/          # Architektur- und Ablaufdiagramme
+│
+├── docs/                  # Dokumentation entlang der Kapitellogik (00–12)
+│   └── project_workpackages/   # Arbeitspakete AP01–AP11
+│
+├── notebooks/             # Forschungs- und Experimentierumgebung (01–08)
+│
+├── src/
+│   └── rag_framework/     # Produktiver Python-Code (Package)
+│       ├── ingestion/     # Semantische Ingestion
+│       ├── chunking/      # Chunking-Strategien
+│       ├── embeddings/    # Embedding-Modelle
+│       ├── retrieval/     # Retrieval-Logik
+│       ├── vectorstore/   # Vektordatenbank-Anbindung
+│       ├── knowledge/     # Wissensorganisation, Provenance, Source Trust
+│       ├── agents/        # Agentengestützte Architektur
+│       ├── forecasting/   # Prognosemodellierung exogener Faktoren
+│       ├── evaluation/    # Evaluationsmetriken
+│       ├── api/           # API-Schicht
+│       └── utils/         # Hilfsfunktionen
+│
+├── configs/               # YAML-Konfigurationen pro Komponente
+├── data/                  # Datenhinweise, Beispiel- und Goldstandard-Daten
+├── tests/                 # pytest-basierte Tests
+├── frontend/              # Frontend (bestehend)
+├── chunking-viz/          # Interaktive Chunking-Visualisierung (bestehend)
+├── landing-page/          # Dokumentations-/Landing-Page (optional)
+└── .github/               # Workflows, Issue- und PR-Templates
+```
+
+> Hinweis: `src/`, `docs/`, `configs/`, `tests/` und Teile der `.github/`-Struktur werden im Zuge der Neustrukturierung schrittweise aufgebaut. Der bisherige Stand ist im Branch `backup/pre-restructure` gesichert.
+
+## Quickstart
+
+```bash
+# 1. Repository klonen
+git clone https://github.com/DYsop/rag-framework.git
+cd rag-framework
+
+# 2. Python-Umgebung einrichten
+python -m venv .venv
+source .venv/bin/activate        # Windows: .venv\Scripts\activate
+pip install -r requirements.txt
+
+# 3. Konfiguration vorbereiten
+cp .env.example .env             # Werte lokal eintragen, .env wird NICHT versioniert
+
+# 4. Infrastruktur (Vektor-DB etc.) optional via Docker starten
+docker-compose up -d
+
+# 5. Tests ausführen
+pytest tests/
+```
+
+Die interaktive Chunking-Visualisierung kann separat gestartet werden:
+
 ```bash
 cd chunking-viz
 npm install
 npm run dev
 ```
 
----
+## Datenhinweise
 
-## Projektstruktur
+Es werden **keine** echten, vertraulichen oder urheberrechtlich problematischen Rohdaten in das Repository aufgenommen. Versioniert werden ausschließlich kleine Beispieldaten, synthetische Testdaten und Goldstandard-Fragen. Details, Ordnerstruktur und die Trennung von Roh-, verarbeiteten und Goldstandard-Daten sind in [`data/README.md`](data/README.md) beschrieben.
 
-```
-rag-framework/
-│
-├── notebooks/                  # Experimentier-Umgebung (Jupyter)
-│   ├── 01_chunking_embedding.ipynb
-│   ├── 02_advanced_rag.ipynb
-│   ├── 03_graphrag.ipynb
-│   └── 04_agents.ipynb
-│
-├── src/                        # Produktivcode
-│   ├── ingestion/              # Chunking & Embedding
-│   │   ├── __init__.py
-│   │   ├── chunker.py
-│   │   └── embedder.py
-│   ├── retrieval/              # RAG & GraphRAG
-│   │   ├── __init__.py
-│   │   ├── rag_pipeline.py
-│   │   └── graph_rag.py
-│   ├── agents/                 # Agenten-Framework
-│   │   ├── __init__.py
-│   │   ├── react_agent.py
-│   │   └── tools.py
-│   ├── api/                    # FastAPI Backend
-│   │   ├── __init__.py
-│   │   └── main.py
-│   └── graph/                  # Neo4j Interface
-│       ├── __init__.py
-│       └── knowledge_graph.py
-│
-├── tests/                      # Unit & Integration Tests
-│   ├── test_chunker.py
-│   ├── test_embedder.py
-│   └── test_rag_pipeline.py
-│
-├── data/                       # ⚠️ nicht in Git (siehe .gitignore)
-│   ├── raw/                    # Originaldokumente
-│   ├── processed/              # Verarbeitete Daten
-│   └── gold_standard/          # Test-Datensätze (in Git)
-│
-├── docs/
-│   └── grafiken/               # Statische PNG-Grafiken (Thesis)
-│
-├── chunking-viz/               # Interaktive Chunking-Visualisierung
-│   ├── src/App.jsx             # Alle 20 Strategien
-│   ├── package.json
-│   └── README.md
-│
-├── configs/
-├── frontend/
-├── .env.example
-├── .gitignore
-├── docker-compose.yml
-├── package.json
-├── requirements.txt
-└── start.bat
-```
+Wichtige Architekturentscheidung: Die eigentliche Verarbeitung großer oder geschützter Dokumente läuft **nicht** auf GitHub, sondern lokal, auf einem NAS, in Docker, in JupyterLab oder in Codespaces. GitHub enthält Code, Konfiguration, Dokumentation, kleine Testdaten und reproduzierbare Notebooks.
 
-## Quickstart
+## Notebooks
 
-```bash
-# Python-Abhängigkeiten
-pip install -r requirements.txt
+Die Notebooks unter `notebooks/` dienen als Forschungs- und Experimentierumgebung. Produktiver Code liegt in `src/rag_framework/` und wird von den Notebooks importiert. Jedes Notebook beginnt mit einer Markdown-Zelle, die Ziel und Bezug zur Masterarbeit beschreibt:
 
-# Services starten (Qdrant, Neo4j, Elasticsearch)
-docker-compose up -d
+| Notebook | Ziel |
+|----------|------|
+| `01_data_discovery.ipynb` | Sichtung und Charakterisierung der Datenbasis |
+| `02_document_extraction.ipynb` | Extraktion und Normalisierung heterogener Dokumente |
+| `03_chunking_experiments.ipynb` | Vergleich von Chunking-Strategien |
+| `04_embeddings_retrieval.ipynb` | Embedding- und Retrieval-Experimente |
+| `05_vector_database.ipynb` | Aufbau und Test der Vektordatenbank |
+| `06_agentic_rag.ipynb` | Agentengestützte Retrieval- und Analysearchitektur |
+| `07_forecasting_exogenous_factors.ipynb` | Prognosemodellierung exogener Einflussgrößen |
+| `08_evaluation.ipynb` | Gesamtevaluation entlang aller Metriken |
 
-# API starten
-uvicorn src.api.main:app --reload
+## Evaluation
 
-# Oder alles auf einmal (Windows)
-start.bat
-```
+Die Evaluation deckt mehrere Dimensionen ab: Ingestion-Qualität, Chunking-Qualität, Retrieval-Metriken (Recall@k, Precision@k, MRR, nDCG), Antwortqualität (Faithfulness, Answer Relevancy, Context Recall), Provenance und Zitierfähigkeit, Agentenmetriken (Tool-Erfolg, Planungsgüte, Quellenbindung), Prognosemetriken (MAE, RMSE, MAPE, Directional Accuracy) sowie Systemmetriken (Latenz, Kosten, Robustheit, Reproduzierbarkeit). Konzept und Vorgehen sind in [`docs/11_evaluation.md`](docs/11_evaluation.md) dokumentiert.
 
-## Konfiguration
+## Reproduzierbarkeit
 
-Kopiere `.env.example` → `.env` und trage deine Werte ein:
+Reproduzierbarkeit wird durch deklarative Konfiguration (`configs/*.yaml`), feste Abhängigkeiten (`requirements.txt`, `pyproject.toml`), eine klare Trennung von Experiment und Produktivcode sowie durch CI-Workflows (`.github/workflows/`) unterstützt. Es werden keine Scheinergebnisse erzeugt; nicht implementierte Funktionen sind als `TODO` mit Docstrings gekennzeichnet.
 
-```bash
-cp .env.example .env
-```
+## Roadmap
 
-## Tests
+Der Arbeitsfortschritt ist in Arbeitspaketen (AP01–AP11) unter `docs/project_workpackages/` und in den GitHub Issues/Projects organisiert. Die Pakete bilden die Kapitellogik der Masterarbeit ab – von der Repository-Neustrukturierung über Datenbasis, Ingestion, Vektordatenbank, Agentenarchitektur und Prognosemodellierung bis zu Evaluation und Release.
 
-```bash
-pytest tests/
-```
+## Zitierhinweis
+
+Wenn dieses Artefakt zitiert wird, bitte die Angaben aus [`CITATION.cff`](CITATION.cff) verwenden.
+
+## Lizenz und Nutzungsgrenzen
+
+Die Lizenz ist in [`LICENSE`](LICENSE) hinterlegt. Das Repository enthält bewusst keine echten Unternehmensdaten, keine großen Rohdaten und keine vertraulichen Inhalte. Es dient als technische und dokumentarische Grundlage zur Masterarbeit.

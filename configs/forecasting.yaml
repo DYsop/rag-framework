@@ -1,0 +1,28 @@
+# Konfiguration: Prognosemodellierung exogener Einflussgroessen
+# Siehe src/rag_framework/forecasting/ und docs/09_prognosemodellierung.md
+
+forecasting:
+  # Modelltyp: naive | arima | ets | gradient_boosting | configurable
+  model: "configurable"
+  horizon: 6
+  frequency: "M"   # monatlich
+
+  exogenous_factors:
+    - konjunktur
+    - zinsen
+    - rohstoffpreise
+    - energiepreise
+    - demografie
+    - regulierung
+
+  scenarios:
+    - name: "A"
+      description: "Basisszenario"
+    - name: "B"
+      description: "Alternativszenario"
+
+  evaluation_metrics:
+    - mae
+    - rmse
+    - mape
+    - directional_accuracy

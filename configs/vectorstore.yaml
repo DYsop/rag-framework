@@ -1,0 +1,28 @@
+# Konfiguration: Vektordatenbank
+# Siehe src/rag_framework/vectorstore/
+# Hinweis: Verbindungsdaten und Secrets gehoeren in .env, NICHT in diese Datei.
+
+vectorstore:
+  # Backend: qdrant | chroma | faiss
+  backend: "qdrant"
+  collection: "rag_framework"
+  distance: "cosine"
+  vector_size: 768
+
+  qdrant:
+    host: "localhost"
+    port: 6333
+    # API-Key etc. ueber Umgebungsvariablen (siehe .env.example)
+
+  chroma:
+    persist_directory: "data/processed/chroma"
+
+  faiss:
+    index_path: "data/processed/faiss.index"
+
+  provenance:
+    store_metadata: true
+    metadata_fields:
+      - source
+      - chunk_index
+      - source_trust

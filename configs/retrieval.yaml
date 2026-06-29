@@ -1,0 +1,20 @@
+# Konfiguration: Retrieval
+# Siehe src/rag_framework/retrieval/ und docs/07_vektordatenbank_wissensorganisation.md
+
+retrieval:
+  # Strategie: dense | sparse | hybrid
+  strategy: "hybrid"
+  top_k: 5
+
+  hybrid:
+    dense_weight: 0.7
+    sparse_weight: 0.3
+
+  reranking:
+    enabled: true
+    model: "cross-encoder/ms-marco-MiniLM-L-6-v2"
+    top_n: 20
+
+  filters:
+    use_source_trust: true
+    min_trust: 0.3

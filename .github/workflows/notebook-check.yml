@@ -1,0 +1,49 @@
+name: notebook-check
+
+# Grobe Pruefung der Notebooks: gueltiges JSON-Format und Vorhandensein von Zellen.
+# Es werden bewusst KEINE Notebooks ausgefuehrt (keine Secrets, keine grossen Daten).
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - "notebooks/**"
+  pull_request:
+    branches: [ main ]
+    paths:
+      - "notebooks/**"
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install nbformat
+        run: pip install nbformat
+
+      - name: Validate notebooks
+        run: |
+          python - <<'PY'
+          import glob, sys, nbformat
+          paths = glob.glob("notebooks/**/*.ipynb", recursive=True)
+          if not paths:
+              print("Keine Notebooks gefunden - nichts zu pruefen.")
+              sys.exit(0)
+          failed = False
+          for p in paths:
+              try:
+                  nb = nbformat.read(p, as_version=4)
+                  nbformat.validate(nb)
+                  print(f"OK: {p} ({len(nb.cells)} Zellen)")
+              except Exception as exc:
+                  print(f"FEHLER: {p}: {exc}")
+                  failed = True
+          sys.exit(1 if failed else 0)
+          PY

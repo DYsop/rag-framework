@@ -1,0 +1,26 @@
+# Konfiguration: Chunking
+# Siehe src/rag_framework/chunking/ und chunking-viz/
+
+chunking:
+  # Aktive Strategie: fixed | sentence | paragraph | semantic | hierarchical
+  strategy: "semantic"
+
+  fixed:
+    chunk_size: 512
+    chunk_overlap: 64
+
+  sentence:
+    max_sentences: 8
+    overlap_sentences: 1
+
+  semantic:
+    target_tokens: 400
+    similarity_threshold: 0.75
+
+  hierarchical:
+    levels:
+      - section
+      - paragraph
+      - sentence
+
+  preserve_provenance: true

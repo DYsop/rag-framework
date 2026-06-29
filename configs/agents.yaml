@@ -1,0 +1,27 @@
+# Konfiguration: Agentengestuetzte Architektur
+# Siehe src/rag_framework/agents/ und docs/08_agentengestuetzte_architektur.md
+# Hinweis: LLM-API-Keys gehoeren in .env, NICHT in diese Datei.
+
+agents:
+  # LLM-Anbindung ueber Umgebungsvariablen (siehe .env.example)
+  llm_provider: "configurable"
+  max_steps: 6
+  temperature: 0.2
+
+  pipeline:
+    - goal_understanding
+    - retrieval
+    - reasoning
+    - answer_generation
+
+  tools:
+    - name: "retriever"
+      enabled: true
+    - name: "forecaster"
+      enabled: true
+    - name: "calculator"
+      enabled: false
+
+  source_binding:
+    require_citations: true
+    min_sources: 1

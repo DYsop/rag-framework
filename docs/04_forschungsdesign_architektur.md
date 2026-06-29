@@ -2,7 +2,7 @@
 
 ## Forschungsdesign
 
-Die Arbeit folgt einem gestaltungsorientierten Ansatz (Design Science): Konzeption eines Artefakts, prototypische Realisierung und Evaluation entlang definierter Metriken. Die Forschungsfragen FF1–FF4 strukturieren Entwurf und Bewertung.
+Die Arbeit folgt einem gestaltungsorientierten Ansatz (Design Science): Konzeption eines Artefakts, prototypische Realisierung und Evaluation entlang definierter Metriken. Die Forschungsfragen FF1–FF6 strukturieren Entwurf und Bewertung.
 
 ## Anforderungen
 

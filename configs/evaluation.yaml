@@ -1,0 +1,44 @@
+# Konfiguration: Evaluation
+# Siehe src/rag_framework/evaluation/ und docs/11_evaluation.md
+
+evaluation:
+  gold_standard: "data/gold_standard"
+  k_values: [1, 3, 5, 10]
+  seed: 42
+
+  dimensions:
+    ingestion:
+      - completeness
+      - normalization_error_rate
+      - metadata_coverage
+    chunking:
+      - coherence
+      - granularity
+      - redundancy
+    retrieval:
+      - recall_at_k
+      - precision_at_k
+      - mrr
+      - ndcg
+    answer:
+      - faithfulness
+      - answer_relevancy
+      - context_recall
+    provenance:
+      - citation_rate
+      - source_coverage
+      - citation_correctness
+    agents:
+      - tool_success
+      - planning_quality
+      - source_binding
+    forecasting:
+      - mae
+      - rmse
+      - mape
+      - directional_accuracy
+    system:
+      - latency
+      - cost
+      - robustness
+      - reproducibility

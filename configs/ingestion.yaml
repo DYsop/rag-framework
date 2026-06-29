@@ -1,0 +1,31 @@
+# Konfiguration: Semantische Ingestion
+# Siehe docs/06_semantische_ingestion.md und src/rag_framework/ingestion/
+
+ingestion:
+  # Quellen-Wurzelverzeichnis (lokal, nicht versioniert)
+  source_dir: "data/raw"
+  output_dir: "data/processed"
+
+  # Unterstuetzte Formate (Platzhalter; konkrete Extraktoren folgen)
+  formats:
+    - pdf
+    - docx
+    - txt
+    - html
+    - csv
+
+  normalization:
+    lowercase: false
+    strip_whitespace: true
+    remove_boilerplate: true
+
+  metadata:
+    add_source: true
+    add_timestamp: true
+    add_source_trust: true
+
+embedding:
+  model_name: "intfloat/multilingual-e5-base"
+  dimension: 768
+  normalize: true
+  batch_size: 32

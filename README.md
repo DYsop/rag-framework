@@ -48,10 +48,16 @@ Eine ausführliche Beschreibung findet sich in den Dokumentationskapiteln unter 
 
 ## Forschungsfragen
 
-- **FF1:** Wie können heterogene Unternehmensinformationen so semantisch erschlossen werden, dass Retrieval-Ergebnisse nachvollziehbar (Provenance) und quellenbindend bleiben?
-- **FF2:** Welchen Beitrag leistet eine agentengestützte Orchestrierung gegenüber klassischem Single-Pass-RAG bei mehrstufigen Analysefragen?
-- **FF3:** Wie lassen sich exogene Einflussgrößen aus erschlossenen Wissensbeständen prognoseorientiert modellieren und bewerten?
-- **FF4:** Mit welchen Metriken lassen sich Ingestion, Retrieval, Antwortqualität, Agentenverhalten und Prognosegüte reproduzierbar evaluieren?
+**Übergeordnete Forschungsfrage:** Wie kann ein agentengestütztes RAG-Framework gestaltet werden, das heterogene Unternehmensinformationen semantisch erschließt, Antworten quellengebunden erzeugt und interne Kennzahlen mit exogenen Einflussgrößen zu einer szenario- und prognoseorientierten Modellierung verbindet?
+
+Sie wird in sechs eigenständig operationalisierbare Teilforschungsfragen ausdifferenziert (Herleitung und Operationalisierung in `docs/01_einleitung.md`):
+
+- **FF1 – Semantische Ingestion:** Wie kann eine robuste Ingestion-Pipeline heterogene Unternehmensdokumente extrahieren, strukturell rekonstruieren, segmentieren, mit Metadaten anreichern und für semantisches Retrieval verfügbar machen?
+- **FF2 – Chunking, Embedding und Retrieval:** Welche Kombination aus Chunking-Strategie, Embedding-Modell und Retrieval-Verfahren erzielt für den Unternehmenskorpus die beste Retrieval- und Kontextqualität?
+- **FF3 – Vektordatenbank und Wissensorganisation:** Wie ist eine Vektordatenbank- und Wissensorganisationsschicht zu gestalten, die hybride Suche, Metadatenfilterung, Provenance, Source Trust und inkrementelle Aktualisierung trägt?
+- **FF4 – Agentengestützte Analysearchitektur:** Wie können Agenten komplexe Analysefragen durch Query Planning, Tool-Nutzung, Multi-Hop-Retrieval, Validierung und Quellenbindung kontrolliert beantworten?
+- **FF5 – Prognoseorientierte Modellierung:** Wie lassen sich extrahierte Unternehmenskennzahlen mit exogenen Einflussgrößen koppeln, um dynamische Szenario- und Prognosemodelle zu ermöglichen?
+- **FF6 – Evaluation:** Wie lässt sich das Gesamtframework entlang technischer, fachlicher, prognosebezogener und vertrauensbezogener Qualitätsdimensionen evaluieren?
 
 ## Repository-Struktur
 

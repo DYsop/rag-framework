@@ -1,0 +1,24 @@
+cff-version: 1.2.0
+message: "Wenn Sie dieses Forschungsartefakt verwenden, zitieren Sie es bitte wie folgt."
+title: "Agentengestütztes RAG-Framework zur semantischen Erschließung heterogener Unternehmensinformationen und prognoseorientierten Modellierung exogener Einflussgrößen"
+abstract: >-
+  Technisches Forschungsartefakt zur gleichnamigen Masterarbeit im Studiengang
+  Angewandte Künstliche Intelligenz. Das Framework verbindet Retrieval-Augmented
+  Generation mit agentengestützter Orchestrierung zur semantischen Erschließung
+  heterogener Unternehmensinformationen sowie zur prognoseorientierten
+  Modellierung exogener Einflussgrößen.
+type: software
+authors:
+  - family-names: "DYsop"
+    given-names: ""
+keywords:
+  - "RAG"
+  - "Retrieval-Augmented Generation"
+  - "Agenten"
+  - "Wissensmanagement"
+  - "Prognose"
+  - "Angewandte Künstliche Intelligenz"
+license: MIT
+repository-code: "https://github.com/DYsop/rag-framework"
+version: "0.1.0"
+date-released: "2026-01-01"

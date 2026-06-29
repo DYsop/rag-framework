@@ -1,0 +1,36 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "rag-framework"
+version = "0.1.0"
+description = "Agentengestütztes RAG-Framework zur semantischen Erschließung heterogener Unternehmensinformationen und prognoseorientierten Modellierung exogener Einflussgrößen"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { file = "LICENSE" }
+authors = [{ name = "DYsop" }]
+keywords = ["rag", "retrieval-augmented-generation", "agents", "forecasting", "knowledge-management"]
+
+# Laufzeitabhängigkeiten werden in requirements.txt gepflegt und hier bewusst
+# minimal gehalten, damit das Package auch ohne schwere optionale Stacks importierbar bleibt.
+dependencies = [
+  "pyyaml>=6.0",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=7.4",
+  "ruff>=0.1",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"

@@ -176,3 +176,38 @@ Wenn dieses Artefakt zitiert wird, bitte die Angaben aus [`CITATION.cff`](CITATI
 ## Lizenz und Nutzungsgrenzen
 
 Die Lizenz ist in [`LICENSE`](LICENSE) hinterlegt. Das Repository enthält bewusst keine echten Unternehmensdaten, keine großen Rohdaten und keine vertraulichen Inhalte. Es dient als technische und dokumentarische Grundlage zur Masterarbeit.
+
+
+## Kapitel 5 – Datenbasis und Vorverarbeitung (Status: Work in Progress)
+
+> Das Repository versioniert die reproduzierbare Methode, nicht den
+> vollstaendigen Datenkoerper.
+
+Das Notebook [`notebooks/00_pdf_inventory_and_metadata.ipynb`](notebooks/00_pdf_inventory_and_metadata.ipynb)
+implementiert die vorgelagerte **Vorverarbeitungsschicht** des Frameworks. Es
+ueberfuehrt einen heterogenen PDF-Bestand aus Bundesanzeiger-Veroeffentlichungen
+in ein geprueftes, metadatenreiches und versionierbares **Dokumentinventar** –
+die Eingabe fuer die nachgelagerte semantische Ingestion (Kapitel 6).
+
+Die wiederverwendbare Pipeline-Logik liegt unter
+[`src/rag_framework/ingestion/`](src/rag_framework/ingestion/)
+(`pdf_discovery`, `metadata_extraction`, `document_classification`,
+`quality_gate`, `inventory_export`, `figure_export`); die Konfiguration in
+[`configs/inventory_config.yaml`](configs/inventory_config.yaml).
+
+### Ergebnisartefakte
+
+- Ausgewaehlte Reports und Abbildungen des aktuell referenzierten Laufs:
+  [`docs/results/latest/`](docs/results/latest/)
+- Vollstaendiges Archiv je konkretem Lauf:
+  [`docs/results/runs/`](docs/results/runs/)
+- Anonymisierte Beispielartefakte zur Inventarstruktur:
+  [`data/samples/`](data/samples/)
+
+### Abgrenzung zu Rohdaten
+
+Die **Roh-PDFs aus dem Bundesanzeiger sind nicht im Repository enthalten** und
+werden aus rechtlichen und technischen Gruenden nicht versioniert. Auch das
+vollstaendige Inventar (CSV/XLSX/Parquet) verbleibt als lokales
+Forschungsartefakt unter `data/processed/`. Fuer reproduzierbare Laeufe muss der
+Korpus lokal unter `data/raw/` bereitgestellt werden.

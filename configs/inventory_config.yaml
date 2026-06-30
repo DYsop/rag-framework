@@ -1,0 +1,51 @@
+# ============================================================
+# Konfiguration: PDF-Inventarisierung & Metadatenextraktion
+# Vorgelagerte Vorverarbeitungsschicht des RAG-Frameworks (Kapitel 5)
+# Siehe: docs/chapter_05/README.md, src/rag_framework/ingestion/
+# ============================================================
+
+input:
+  raw_dir: "data/raw"
+  processed_dir: "data/processed"
+
+pipeline:
+  version: "v4.0-docling"
+  use_docling: true
+  use_ocr_for_scanned: false
+  use_pypdf_fallback: true
+
+exports:
+  write_csv: true
+  write_xlsx: true
+  write_parquet: true
+  write_run_metadata: true
+  write_evaluation_report: true
+  write_inventory_errors: true
+  write_figures: true
+
+figures:
+  output_dir_local: "data/processed/figures"
+  output_dir_repo_latest: "docs/results/latest/figures"
+  output_dir_repo_runs: "docs/results/runs"
+  dpi: 300
+  format: "png"
+  save_all_local: true
+  save_selected_to_repo: true
+  selected_figures:
+    - "01_dashboard_uebersicht"
+    - "04_ground_truth_evaluation"
+    - "05_executive_summary"
+    - "06_verarbeitungsfortschritt"
+    - "07_inventar_kpi"
+
+quality_gate:
+  fail_on_parse_errors: true
+  require_header_complete: true
+  min_metadata_quality_score: 0.8
+
+git_policy:
+  version_raw_pdfs: false
+  version_full_processed_inventory: false
+  version_selected_reports: true
+  version_selected_figures: true
+  anonymize_local_paths_in_samples: true

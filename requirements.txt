@@ -60,3 +60,10 @@ loguru>=0.7.0
 jupyter>=1.0.0
 ipykernel>=6.29.0
 ipywidgets>=8.1.0
+
+# ── Datenbasis & Vorverarbeitung (Kapitel 5: PDF-Inventarisierung) ──
+openpyxl>=3.1.0
+pyarrow>=16.0.0
+# Docling: PDF-Layout-/Strukturextraktion (installationssensibel,
+# grosse Abhaengigkeiten). Fallback ueber pypdf moeglich.
+docling>=2.0.0

@@ -1,5 +1,5 @@
 # ============================================================
-# .gitignore – Agentengestütztes RAG-Framework
+# .gitignore – Agentengestuetztes RAG-Framework
 # ============================================================
 
 # --- Umgebungsvariablen / Secrets ---
@@ -30,24 +30,48 @@ htmlcov/
 .ipynb_checkpoints/
 */.ipynb_checkpoints/
 
-# --- Lokale Rohdaten (NICHT versionieren) ---
+# --- Lokale Roh- und Prozessdaten (NICHT versionieren) ---
 data/raw/
 data/processed/
 data/interim/
 data/external/
+data/cache/
+data/vectorstores/
+data/indexes/
+
+# --- Kleine, kuratierte Daten behalten ---
 !data/sample/
+!data/samples/
+!data/samples/**
 !data/gold_standard/
 !data/README.md
 !data/.gitkeep
 
-# --- Große Dokumente / Binärdateien ---
+# --- Grosse Dokumente / Binaerdateien ---
 *.pdf
+*.parquet
 *.docx
 *.pptx
 *.xlsx
 *.zip
 *.tar
 *.tar.gz
+
+# Generierte Excel/CSV/JSON-Exporte der Pipeline (lokal halten)
+data/processed/*.xlsx
+data/processed/*.csv
+data/processed/*.json
+
+# --- Dokumentierte, ausgewaehlte Ergebnisartefakte BEHALTEN ---
+# Wichtig: docs/results/ bleibt versionierbar, obwohl data/processed/ ignoriert wird.
+!docs/results/
+!docs/results/**
+!docs/results/**/*.json
+!docs/results/**/*.csv
+!docs/results/**/*.png
+!docs/results/**/*.md
+
+# Abbildungen in assets/docs weiterhin erlauben
 !assets/**/*.png
 !docs/**/*.png
 
@@ -63,7 +87,7 @@ chroma/
 *.db
 neo4j/
 
-# --- Logs / temporäre Dateien ---
+# --- Logs / temporaere Dateien ---
 logs/
 *.log
 tmp/

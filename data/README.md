@@ -1,39 +1,67 @@
 # Datenhinweise
 
-Dieses Verzeichnis dokumentiert die Datenstrategie des Frameworks. Es enthält bewusst **keine** echten großen Rohdaten, keine vertraulichen und keine urheberrechtlich problematischen Dokumente.
+Dieses Verzeichnis dokumentiert die Datenstrategie des Frameworks. Es enthaelt
+bewusst **keine** echten grossen Rohdaten, keine vertraulichen und keine
+urheberrechtlich problematischen Dokumente.
 
-## Welche Daten lokal erwartet werden
+## Datenebenen im Ueberblick
 
-Die eigentlichen Quelldaten (z. B. Dokumente, Exporte aus ERP/CRM, externe Datensätze) werden **lokal** bereitgestellt und liegen außerhalb von Git. Sie werden in `data/raw/` abgelegt und durch die Ingestion verarbeitet.
-
-## Ordnerstruktur
-
-```text
+```
 data/
 ├── README.md          # diese Datei (versioniert)
-├── raw/               # Originaldokumente / Quelldaten (NICHT versioniert)
-├── interim/           # Zwischenstände der Verarbeitung (NICHT versioniert)
-├── processed/         # verarbeitete Daten / Indizes (NICHT versioniert)
-├── external/          # extern bezogene Datensätze (NICHT versioniert)
-├── sample/            # kleine Beispiel-/synthetische Daten (versioniert)
-└── gold_standard/     # Goldstandard-Fragen/-Antworten (versioniert)
+├── raw/               # Roh-PDFs (Bundesanzeiger u. a.) – NICHT versioniert
+├── interim/           # Zwischenstaende der Verarbeitung – NICHT versioniert
+├── processed/         # Pipeline-Ausgaben (Inventar, Reports) – NICHT versioniert
+│   └── figures/       # lokal erzeugte Ergebnisgrafiken – NICHT versioniert
+├── external/          # extern bezogene Datensaetze – NICHT versioniert
+├── samples/           # kleine, anonymisierte Beispielartefakte – versioniert
+└── gold_standard/     # Goldstandard-Fragen/-Antworten – versioniert
 ```
 
-## Was NICHT in Git gespeichert wird
+## `data/raw/` – Roh-PDFs (nicht versioniert)
 
-`data/raw/`, `data/interim/`, `data/processed/` und `data/external/` sind in `.gitignore` ausgeschlossen. Versioniert werden ausschließlich `data/README.md`, `data/sample/` und `data/gold_standard/` – und auch dort nur kleine, unkritische Dateien.
+`data/raw/` enthaelt den lokalen Bundesanzeiger-PDF-Korpus, der die Eingabe der
+Inventarisierungs-Pipeline bildet. Diese Roh-PDFs werden aus **rechtlichen**
+(Urheber-/Nutzungsrechte) und **technischen** (Datenvolumen, Binaergroesse)
+Gruenden **nicht** in Git abgelegt. Fuer reproduzierbare Laeufe muss der Korpus
+lokal unter `data/raw/` bereitgestellt werden.
 
-## Trennung der Datenebenen
+Empfohlene Unterstruktur (fachlich gruppiert):
 
-- **Rohdaten** (`raw/`): unverändert, lokal, nicht versioniert.
-- **Verarbeitete Daten** (`processed/`, `interim/`): abgeleitet, reproduzierbar, nicht versioniert.
-- **Goldstandard** (`gold_standard/`): kuratierte Referenz für die Evaluation, versioniert.
-- **Beispieldaten** (`sample/`): kleine, synthetische Beispiele für Demos/Tests, versioniert.
+```
+data/raw/
+├── Rechnungslegung_Finanzberichte/
+├── Kapitalmarkt/
+└── Gesellschaftsbekanntmachungen/
+```
 
-## Anbindung externer Datenquellen / Downloads
+## `data/processed/` – Pipeline-Ausgaben (nicht regulaer versioniert)
 
-Größere oder geschützte Daten werden nicht im Repository abgelegt, sondern über eine externe Quelle bezogen (z. B. NAS, Objektspeicher, interne Freigabe oder eine Landing Page mit Downloadhinweis). Empfohlen wird ein dokumentierter, manueller Bezug in `data/raw/`; automatische Downloads werden nicht erzwungen.
+`data/processed/` enthaelt die automatisch erzeugten Ausgaben der Pipeline:
+das vollstaendige Dokumentinventar (CSV/XLSX/Parquet), Run-Metadaten,
+Evaluation-Report, Fehlerdatei sowie unter `data/processed/figures/` die lokal
+erzeugten Grafiken. Diese Artefakte werden **nicht regulaer** versioniert, da
+das vollstaendige Inventar lokale Pfade und umfangreiche Dokumentmetadaten
+enthaelt und Excel-/Parquet-Dateien fuer die Git-Versionierung ungeeignet sind.
+
+Ausgewaehlte, dokumentierte Ergebnisberichte und Abbildungen werden stattdessen
+unter `docs/results/` versioniert (siehe `docs/results/README.md`).
+
+## `data/samples/` – anonymisierte Beispielartefakte (versioniert)
+
+`data/samples/` enthaelt kleine, anonymisierte Beispielartefakte, die die
+Struktur des Inventars dokumentieren, ohne sensible lokale Informationen zu
+exponieren. Lokale Windows-Pfade sind dort relativiert
+(z. B. `data/raw/Rechnungslegung_Finanzberichte/beispiel.pdf`).
+
+## `data/gold_standard/` – Goldstandard (versioniert)
+
+`data/gold_standard/` enthaelt die kuratierte Referenz fuer die Evaluation
+(kleine, unkritische Dateien).
 
 ## Architekturgrenze
 
-Die Verarbeitung großer/geschützter Dokumente läuft außerhalb von GitHub (lokal, NAS, Docker, JupyterLab, Codespaces). GitHub enthält Code, Konfiguration, Dokumentation, kleine Testdaten und reproduzierbare Notebooks.
+Die Verarbeitung grosser/geschuetzter Dokumente laeuft ausserhalb von GitHub
+(lokal, NAS, Docker, JupyterLab, Codespaces). GitHub enthaelt die
+reproduzierbare Methode, Konfiguration, Dokumentation, kleine Beispieldaten und
+ausgewaehlte Ergebnisberichte – **nicht** den vollstaendigen Datenkoerper.
